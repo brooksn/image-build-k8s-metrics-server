@@ -2,15 +2,7 @@ ARG BCI_IMAGE=registry.suse.com/bci/bci-base:latest
 ARG GO_IMAGE=rancher/hardened-build-base:v1.16.10b7
 FROM ${BCI_IMAGE} as bci
 FROM ${GO_IMAGE} as builder
-# setup required packages
-RUN set -x \
- && apk --no-cache add \
-    file \
-    gcc \
-    git \
-    libselinux-dev \
-    libseccomp-dev \
-    make
+ENV CC=/usr/local/musl/bin/musl-gcc
 # setup the build
 ARG PKG="github.com/kubernetes-incubator/metrics-server"
 ARG SRC="github.com/kubernetes-sigs/metrics-server"
